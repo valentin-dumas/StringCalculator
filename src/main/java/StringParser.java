@@ -13,18 +13,15 @@ public class StringParser {
         return input.startsWith("//");
     }
 
-    private List<String> getCustomDelimiters(String input) {
+    private String getCustomDelimiter(String input) {
         final Pattern p = Pattern.compile(FIND_DELIMITER_PATTERN);
         final Matcher m = p.matcher(input);
 
-        List<String> customDelimiters = new ArrayList<>();
-        customDelimiters.add(NEWLINE_DELIMITER);
-
         if (m.find()) {
-            customDelimiters.add(m.group(1)); // extracted delimiter
+            return m.group(1);
         }
 
-        return customDelimiters;
+        throw new IllegalStateException("Couldn't find custom delimiter");
     }
 
     private String formatDelimiters(List<String> delimiters) {
@@ -33,7 +30,7 @@ public class StringParser {
                 .collect(Collectors.joining("|", "[", "]"));
     }
 
-    private String removeCustomDelimiters(String input) {
+    private String stripHeadline(String input) {
         return input.replaceFirst(FIND_DELIMITER_PATTERN, "");
     }
 
@@ -41,15 +38,13 @@ public class StringParser {
         List<String> delimiters = new ArrayList<>();
         delimiters.add(NEWLINE_DELIMITER);
         if (hasCustomDelimiter(input)) {
-            delimiters = getCustomDelimiters(input);
-            input = removeCustomDelimiters(input);
+            delimiters.add(getCustomDelimiter(input));
+            input = stripHeadline(input);
         } else {
             delimiters.add(DEFAULT_DELIMITER);
         }
 
         var delimitersFormatted = formatDelimiters(delimiters);
-
-        //System.out.println(delimitersFormatted);
 
         return List.of(input.split(delimitersFormatted))
                 .stream()
@@ -57,5 +52,4 @@ public class StringParser {
                 .map(s -> Integer.parseInt(s))
                 .collect(Collectors.toList());
     }
-
 }

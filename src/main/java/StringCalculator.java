@@ -9,11 +9,11 @@ public final class StringCalculator {
     }
 
     public int add(String numbers) {
-        final StringParser stringParser = new StringParser();
-
         if (numbers.isEmpty()) {
             return 0;
         }
+
+        final StringParser stringParser = new StringParser();
 
         final List<Integer> parsedNumbers = stringParser.parse(numbers);
 
@@ -27,5 +27,4 @@ public final class StringCalculator {
 
         return parsedNumbers.stream().reduce(0, Integer::sum);
     }
-
 }

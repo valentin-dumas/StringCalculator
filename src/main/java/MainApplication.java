@@ -1,14 +1,18 @@
-public class MainApplication {
+class MainApplication {
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        /*
+            Pour cet exercice, effectuer des tests unitaires n'étaient pas demandé.
+            En cas réel, j'aurais pratiquer la méthode TDD (Test Driven Development) en:
+                - appelant des cas dans des assertions pour tester
+                - en respectant un cycle de type "test (failing) --> code writing --> test (passing) --> code refactoring"
+         */
 
         StringCalculator stringCalculator = new StringCalculator();
 
-//        System.out.println(stringCalculator.add("//[%][=]\n1%2=3"));
-
+        // Use cases
         System.out.println(stringCalculator.add("1\n2,3"));
-        System.out.println(stringCalculator.add("1,\n")); // should say string not okay ?
+        System.out.println(stringCalculator.add("1,\n"));
         System.out.println(stringCalculator.add(""));
         System.out.println(stringCalculator.add("1"));
         System.out.println(stringCalculator.add("1,2"));
@@ -22,12 +26,10 @@ public class MainApplication {
         System.out.println(stringCalculator.add("//[;]\n1;2"));
         System.out.println(stringCalculator.add("//[;]\n\n1;2"));
         System.out.println(stringCalculator.add("//[;]\n1;2;\n3"));
-
-        // Negative numbers
+        // Negative numbers (throw exceptions)
         // System.out.println(stringCalculator.add("-1"));
         // System.out.println(stringCalculator.add("-1,-2"));
         // System.out.println(stringCalculator.add("-1,2"));
         // System.out.println(stringCalculator.add("1-2"));
     }
-
 }
